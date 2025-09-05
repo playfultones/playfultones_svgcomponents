@@ -17,14 +17,15 @@ public:
     void paintButton (juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override;
     void resized() override;
 
+protected:
+    ButtonComponent (const ButtonComponent& other);
+
 private:
     StaticImageComponent offImage;
     StaticImageComponent onImage;
     std::unique_ptr<StaticImageComponent> disabledImage;
     std::unique_ptr<StaticImageComponent> onDisabledImage;
     std::unique_ptr<StaticImageComponent> hoverImage;
-
-    ButtonComponent (const ButtonComponent& other);
 
     JUCE_LEAK_DETECTOR (ButtonComponent)
 };
