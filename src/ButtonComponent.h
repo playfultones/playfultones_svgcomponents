@@ -8,6 +8,7 @@ public:
         int offBinaryDataSize,
         const char* onBinaryData,
         int onBinaryDataSize);
+    ButtonComponent (const ButtonComponent& other);
     ~ButtonComponent() override;
 
     ButtonComponent withDisabledImage (const char* binaryData, int binaryDataSize) const;
@@ -16,10 +17,6 @@ public:
 
     void paintButton (juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override;
     void resized() override;
-
-protected:
-    ButtonComponent (const ButtonComponent& other);
-
 private:
     StaticImageComponent offImage;
     StaticImageComponent onImage;
