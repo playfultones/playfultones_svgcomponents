@@ -18,6 +18,7 @@ namespace PlayfulTones
     {
         #include "src/StaticImageComponent.cpp"
         #include "src/ButtonComponent.cpp"
+        #include "src/StateAwareButtonComponent.cpp"
         #include "src/DropdownComponent.cpp"
     }
 }
