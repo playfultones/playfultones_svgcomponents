@@ -96,7 +96,7 @@ void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bo
         else
             imageToShow = &offImage;
     }
-    else if (isMouseOverButton && hoverImage)
+    else if (isMouseOverButton && hoverImage && !getToggleState())
     {
         imageToShow = hoverImage.get();
     }
