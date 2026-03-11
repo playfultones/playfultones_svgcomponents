@@ -1,6 +1,7 @@
 #pragma once
 
-class ButtonComponent : public juce::Button
+class ButtonComponent : public juce::Button,
+                        private juce::Timer
 {
 public:
     ButtonComponent (const juce::String& name,
@@ -15,14 +16,23 @@ public:
     ButtonComponent withOnDisabledImage (const char* binaryData, int binaryDataSize) const;
     ButtonComponent withHoverImage (const char* binaryData, int binaryDataSize) const;
 
+    /** Briefly flash between the on/off images without changing the toggle state.
+        Useful for visual confirmation feedback*/
+    void flash (int blinkCount = 4, int rateHz = 6);
+
     void paintButton (juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override;
     void resized() override;
+
 private:
+    void timerCallback() override;
+
     StaticImageComponent offImage;
     StaticImageComponent onImage;
     std::unique_ptr<StaticImageComponent> disabledImage;
     std::unique_ptr<StaticImageComponent> onDisabledImage;
     std::unique_ptr<StaticImageComponent> hoverImage;
+
+    int flashCounter = 0;
 
     JUCE_LEAK_DETECTOR (ButtonComponent)
 };

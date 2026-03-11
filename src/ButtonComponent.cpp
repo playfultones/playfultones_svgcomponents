@@ -76,6 +76,23 @@ ButtonComponent ButtonComponent::withHoverImage (const char* binaryData, int bin
     return copy;
 }
 
+void ButtonComponent::flash (int blinkCount, int rateHz)
+{
+    flashCounter = blinkCount;
+    startTimerHz (rateHz);
+}
+
+void ButtonComponent::timerCallback()
+{
+    if (--flashCounter <= 0)
+    {
+        stopTimer();
+        flashCounter = 0;
+    }
+
+    repaint();
+}
+
 void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bool isButtonDown)
 {
     for (int i = 0; i < getNumChildComponents(); ++i)
@@ -85,7 +102,12 @@ void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bo
 
     juce::Component* imageToShow = nullptr;
 
-    if (!isEnabled())
+    if (flashCounter > 0)
+    {
+        const bool showOn = (flashCounter & 1) != 0;
+        imageToShow = showOn ? &onImage : &offImage;
+    }
+    else if (!isEnabled())
     {
         if (getToggleState() && onDisabledImage)
             imageToShow = onDisabledImage.get();
