@@ -44,6 +44,10 @@ StaticImageComponent::~StaticImageComponent() = default;
 
 void StaticImageComponent::resized()
 {
+    // Avoid rendering SVGs with zero dimensions (resvg panics on zero-size render)
+    if (getWidth() <= 0 || getHeight() <= 0)
+        return;
+
     if (svgComponent != nullptr)
     {
         svgComponent->setBounds (getLocalBounds());

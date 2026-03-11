@@ -115,6 +115,9 @@ void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bo
 
 void ButtonComponent::resized()
 {
+    if (getWidth() <= 0 || getHeight() <= 0)
+        return;
+
     auto bounds = getLocalBounds();
     for (int i = 0; i < getNumChildComponents(); ++i)
     {
