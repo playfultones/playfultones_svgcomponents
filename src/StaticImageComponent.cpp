@@ -6,6 +6,7 @@ StaticImageComponent::StaticImageComponent (const char* binaryData, int binaryDa
     if (jb::Resvg::RenderTree tree; tree.loadFromBinaryData (binaryData, binaryDataSize))
     {
         svgComponent = std::make_unique<jb::SVGComponent> (std::move (tree));
+        svgComponent->setCacheIdentity (binaryData, binaryDataSize);
         addAndMakeVisible (*svgComponent);
     }
 }
@@ -18,6 +19,7 @@ StaticImageComponent::StaticImageComponent (const StaticImageComponent& other)
     if (jb::Resvg::RenderTree tree; tree.loadFromBinaryData (binaryData, binaryDataSize))
     {
         svgComponent = std::make_unique<jb::SVGComponent> (std::move (tree));
+        svgComponent->setCacheIdentity (binaryData, binaryDataSize);
         addAndMakeVisible (*svgComponent);
     }
 }
@@ -34,6 +36,7 @@ StaticImageComponent& StaticImageComponent::operator= (const StaticImageComponen
         if (jb::Resvg::RenderTree tree; tree.loadFromBinaryData (binaryData, binaryDataSize))
         {
             svgComponent = std::make_unique<jb::SVGComponent> (std::move (tree));
+            svgComponent->setCacheIdentity (binaryData, binaryDataSize);
             addAndMakeVisible (*svgComponent);
         }
     }
