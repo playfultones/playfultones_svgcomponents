@@ -95,11 +95,6 @@ void ButtonComponent::timerCallback()
 
 void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bool isButtonDown)
 {
-    for (int i = 0; i < getNumChildComponents(); ++i)
-    {
-        getChildComponent (i)->setVisible (false);
-    }
-
     juce::Component* imageToShow = nullptr;
 
     if (flashCounter > 0)
@@ -131,8 +126,16 @@ void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bo
         imageToShow = &offImage;
     }
 
-    if (imageToShow)
-        imageToShow->setVisible (true);
+    if (imageToShow != lastShownImage)
+    {
+        // Only toggle visibility when the selection actually changes, to avoid
+        // setVisible() triggering a repaint cycle on every paint call.
+        if (lastShownImage)
+            lastShownImage->setVisible (false);
+        if (imageToShow)
+            imageToShow->setVisible (true);
+        lastShownImage = imageToShow;
+    }
 }
 
 void ButtonComponent::resized()

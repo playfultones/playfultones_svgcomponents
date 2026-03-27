@@ -33,6 +33,7 @@ private:
     std::unique_ptr<StaticImageComponent> hoverImage;
 
     int flashCounter = 0;
+    juce::Component* lastShownImage = nullptr;
 
     JUCE_LEAK_DETECTOR (ButtonComponent)
 };
