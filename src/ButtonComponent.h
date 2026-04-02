@@ -22,6 +22,7 @@ public:
 
     void paintButton (juce::Graphics& g, bool isMouseOverButton, bool isButtonDown) override;
     void resized() override;
+    void visibilityChanged() override;
 
 private:
     void timerCallback() override;

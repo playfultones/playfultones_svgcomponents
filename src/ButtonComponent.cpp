@@ -138,6 +138,12 @@ void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bo
     }
 }
 
+void ButtonComponent::visibilityChanged()
+{
+    if (isVisible())
+        lastShownImage = nullptr;
+}
+
 void ButtonComponent::resized()
 {
     if (getWidth() <= 0 || getHeight() <= 0)
