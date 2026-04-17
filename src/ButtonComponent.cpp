@@ -45,6 +45,13 @@ ButtonComponent::ButtonComponent (const ButtonComponent& other)
         addChildComponent (*hoverImage);
         hoverImage->setInterceptsMouseClicks (false, false);
     }
+
+    if (other.onHoverImage)
+    {
+        onHoverImage = std::make_unique<StaticImageComponent> (*other.onHoverImage);
+        addChildComponent (*onHoverImage);
+        onHoverImage->setInterceptsMouseClicks (false, false);
+    }
 }
 
 ButtonComponent::~ButtonComponent() = default;
@@ -73,6 +80,15 @@ ButtonComponent ButtonComponent::withHoverImage (const char* binaryData, int bin
     copy.hoverImage = std::make_unique<StaticImageComponent> (binaryData, binaryDataSize);
     copy.addChildComponent (*copy.hoverImage);
     copy.hoverImage->setInterceptsMouseClicks (false, false);
+    return copy;
+}
+
+ButtonComponent ButtonComponent::withOnHoverImage (const char* binaryData, int binaryDataSize) const
+{
+    ButtonComponent copy (*this);
+    copy.onHoverImage = std::make_unique<StaticImageComponent> (binaryData, binaryDataSize);
+    copy.addChildComponent (*copy.onHoverImage);
+    copy.onHoverImage->setInterceptsMouseClicks (false, false);
     return copy;
 }
 
@@ -113,7 +129,11 @@ void ButtonComponent::paintButton (juce::Graphics& g, bool isMouseOverButton, bo
         else
             imageToShow = &offImage;
     }
-    else if (isMouseOverButton && hoverImage && !getToggleState())
+    else if (isMouseOverButton && getToggleState() && onHoverImage)
+    {
+        imageToShow = onHoverImage.get();
+    }
+    else if (isMouseOverButton && !getToggleState() && hoverImage)
     {
         imageToShow = hoverImage.get();
     }
