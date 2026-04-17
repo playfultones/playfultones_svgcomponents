@@ -15,6 +15,7 @@ public:
     ButtonComponent withDisabledImage (const char* binaryData, int binaryDataSize) const;
     ButtonComponent withOnDisabledImage (const char* binaryData, int binaryDataSize) const;
     ButtonComponent withHoverImage (const char* binaryData, int binaryDataSize) const;
+    ButtonComponent withOnHoverImage (const char* binaryData, int binaryDataSize) const;
 
     /** Briefly flash between the on/off images without changing the toggle state.
         Useful for visual confirmation feedback*/
@@ -31,6 +32,7 @@ private:
     std::unique_ptr<StaticImageComponent> disabledImage;
     std::unique_ptr<StaticImageComponent> onDisabledImage;
     std::unique_ptr<StaticImageComponent> hoverImage;
+    std::unique_ptr<StaticImageComponent> onHoverImage;
 
     int flashCounter = 0;
     juce::Component* lastShownImage = nullptr;
